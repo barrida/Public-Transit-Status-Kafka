@@ -23,9 +23,9 @@ KSQL_URL = "http://localhost:8088"
 
 KSQL_STATEMENT = """
 CREATE TABLE turnstile (
-    station_id INTEGER,
-    station_name STRING,
-    line STRING
+    station_id BIGINT,
+    station_name VARCHAR,
+    line VARCHAR 
 ) WITH (
     KAFKA_TOPIC='com.udacity.station.turnstile',
     VALUE_FORMAT='AVRO',
@@ -39,7 +39,6 @@ WITH (
     FROM turnstile
     GROUP BY station_id
 );
-
 """
 
 

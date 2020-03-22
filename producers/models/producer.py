@@ -9,8 +9,6 @@ from confluent_kafka.avro import AvroProducer
 
 logger = logging.getLogger(__name__)
 
-BROKER_URL = "PLAINTEXT://localhost:9092"
-
 class Producer:
     """Defines and provides common functionality amongst Producers"""
 
@@ -39,7 +37,7 @@ class Producer:
         #
         #
         self.broker_properties = {
-            'bootstrap.servers': 'localhost:9092',
+            'bootstrap.servers': 'PLAINTEXT://localhost:9092',
             'schema.registry.url': 'http://localhost:8081'
         }
 
@@ -62,21 +60,23 @@ class Producer:
         # the Kafka Broker.
         #
         #
-        client = AdminClient({"bootstrap.servers": BROKER_URL})
-        
+        client = AdminClient({"bootstrap.servers": self.broker_properties["bootstrap.servers"]})
+
         """Creates the topic with the given topic name"""
+
+        logger.info(f"Creating topic: {self.topic_name}")
         futures = client.create_topics(
             [
                 NewTopic(
                     topic=self.topic_name,
                     num_partitions=self.num_partitions,
-                    replication_factor=self.num_replicas,
-                    config={
-                        "cleanup.policy": "delete",
-                        "compression.type": "lz4",
-                        "delete.retention.ms": "2000",
-                        "file.delete.delay.ms": "2000",
-                    },
+                    replication_factor=self.num_replicas
+                    # config={
+                    #     "cleanup.policy": "delete",
+                    #     "compression.type": "lz4",
+                    #     "delete.retention.ms": "2000",
+                    #     "file.delete.delay.ms": "2000",
+                    # },
                 )
             ]
         )
@@ -86,7 +86,7 @@ class Producer:
                 future.result()
                 print("topic created")
             except Exception as e:
-                print(f"failed to create topic {topic_name}: {e}")   
+                print(f"failed to create topic {self.topic_name}: {e}")   
              
         logger.info("topic creation kafka integration incomplete - skipping")
 

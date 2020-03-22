@@ -62,7 +62,7 @@ async def station(stations):
         line = None 
         if station.red: 
             line = 'red'
-        else if station.blue:
+        elif station.blue:
             line = 'blue'
         else:
             line = 'green'
