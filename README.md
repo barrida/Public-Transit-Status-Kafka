@@ -231,3 +231,11 @@ Once the simulation is running, you may hit `Ctrl+C` at any time to exit.
 5. `python server.py`
 
 Once the server is running, you may hit `Ctrl+C` at any time to exit.
+
+# Troubleshooing
+
+### Install pip and virtualenv
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py  
+python get-pip.py  
+pip install virtualenv  
+
