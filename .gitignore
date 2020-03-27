@@ -1,0 +1,4 @@
+consumers/__pycache__/*
+consumers/venv/*
+producers/__pycache__/*
+producers/venv/*
